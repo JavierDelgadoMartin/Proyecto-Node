@@ -6,3 +6,8 @@ body {
 .modal{
     display: block;
 }
+
+#chat{
+    height: 300px;
+    overflow: auto;
+}
