@@ -19,12 +19,16 @@ http.listen(3000, function(){
 io.emit('some event', { for: 'everyone' });
 
 io.on('connection', function(socket){
-    socket.emit();
+  socket.on("login", function(usuario){
+    usuarios.push(usuario);
+    console.log(usuarios);
+    socket.emit(nick + "se ha conectado");
+  });
 });
 
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  socket.on('newMesaje', function(msg){
+    socket.emit('newMesaje', msg);
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
