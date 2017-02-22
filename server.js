@@ -24,9 +24,6 @@ io.on('connection', function(socket){
     console.log(usuarios);
     socket.emit(nick + "se ha conectado");
   });
-});
-
-io.on('connection', function(socket){
   socket.on('newMesaje', function(msg){
     socket.emit('newMesaje', msg);
   });
