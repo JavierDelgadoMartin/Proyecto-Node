@@ -22,7 +22,7 @@ io.emit('some event', { for: 'everyone' });
 io.on('connection', function(socket){
   socket.on("new user", function(usuario){
     usuarios.push(usuario);
-    socket.emit("new user",usuario + " se ha conectado");
+    socket.broadcast.emit("new user",usuario);
   });
   socket.on('newMesaje', function(msg){
     socket.broadcast.emit('newMesaje', msg);
