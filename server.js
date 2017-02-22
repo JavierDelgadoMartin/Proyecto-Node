@@ -7,25 +7,25 @@ var delivery = require("delivery");
 var usuarios = [];
 
 app.use(express.static(path.join(__dirname, 'public')));
+var port = process.env.PORT || 3000;
 
 app.get('/', function(req, res){
   res.sendfile('index.html');
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(port, function(){
+  console.log('listening on *:'+port);
 });
 
 io.emit('some event', { for: 'everyone' });
 
 io.on('connection', function(socket){
-  socket.on("login", function(usuario){
+  socket.on("new user", function(usuario){
     usuarios.push(usuario);
-    console.log(usuarios);
-    socket.emit(nick + "se ha conectado");
+    socket.emit("new user",usuario + " se ha conectado");
   });
   socket.on('newMesaje', function(msg){
-    socket.emit('newMesaje', msg);
+    socket.broadcast.emit('newMesaje', msg);
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
