@@ -11,3 +11,8 @@ body {
     height: 300px;
     overflow: auto;
 }
+
+img{
+    width: 20px;
+    height: auto;
+}
