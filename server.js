@@ -4,6 +4,7 @@ var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var delivery = require("delivery");
+var fs = require("fs");
 var usuarios = {};
 
 app.use(express.static(path.join(__dirname, 'public')));
