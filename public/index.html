@@ -6,32 +6,31 @@
     <body>
         <div class="container">
             <div id="content" class="row">
-                <div id="subir">
-                    <div id="subirImagen"></div>
-                    <div id="subirVideo"></div>
-                    <div id="subirFichero"></div>
-                </div>
                 <div id="esteUsuario"></div>
-                <div id="usuarios" class="col-md-2"></div>
+                <div id="usuarios" class="col-md-2">
+                    <div class="panel-heading">usuarios</div>
+                </div>
                 <div class="col-md-6">
                     <div class="panel">
                         <div class="panel-heading">CHAT NODE.JS</div>
-                        <div id="panel-alertas"></div>
                         <div id="chat" class="panel-body"></div>
                     </div>
                     <div id="cajaMensaje">
-                        <form id="formularioMensaje" class="input-group">
-                            <input id="textoMensaje" type="text" class="form-control input-lg">
-                            <span class="input-group-btn">
-                                <input class="btn btn-lg btn-primary"type="submit">Enviar</input>
-                            </span>
+                        <form id="formularioMensaje">
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <textarea id="textoMensaje"  class="mdl-textfield__input" type="text" rows= "3" id="sample5" ></textarea>
+                                <label class="mdl-textfield__label" for="sample5">Escribe tu mensaje</label>
+                            </div>
+                                <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Enviar"></input>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>       
         <script src="/socket.io/socket.io.js"></script>
         <script src="javascripts/client.js"></script>
     </body>

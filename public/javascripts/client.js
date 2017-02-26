@@ -2,24 +2,30 @@ var socket = io.connect();
 var nick = "";
 var avatar;
 var conectado = false;
+
 var modal= $('<div class="modal"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header">'
         +'<h5 class="modal-title">Introduce datos</h5>'
         +'<div id="imagenes"><img src="/images/avatar1.png"><img src="/images/avatar2.png"><img src="/images/avatar3.png"><img src="/images/avatar4.png">'
         +'<img src="/images/avatar5.png"><img src="/images/avatar6.png">'
-        +'<form id="formulario"><div class="modal-body"><input id="nick" type="text" placeholder="Nick"></div>'
-        +'<div class="modal-footer"><input type="submit" class="btn btn-primary id="enviar" value="Enviar"></input></div></form></div></div></div>');
+        +'<form id="formulario"><div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'
+        +'<input class="mdl-textfield__input" type="text" id="nick">'
+        +'<label class="mdl-textfield__label" for="nick">Introduce nombre usuario</label></div>'
+        +'<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="enviar" value="Enviar"></input></div></form></div></div>');
 
 socket.on("new user",function(user){
     if(conectado!=false){
         var alertUserConect = "<div id=alertaUserConect><p>"+user.name+ " se ha conectado</p></div>";
         setTimeout(function(){$("#alertaUserConect").remove()},3000);
         $("body").append(alertUserConect);
-        $("#usuarios").append("<div id="+user.id+"><img src="+user.avatar+"></img><span>"+user.name+"</span></div>");
+        $("#usuarios").append('<span id='+user.id+' class="mdl-chip mdl-chip--contact">'
+            +'<img class="mdl-chip__contact" src="'+user.avatar+'"></img>'
+            +'<span class="mdl-chip__text">'+user.name+'</span></span>'
+        );
     }
 });
 
 socket.on("newMesaje",function(msg){
-    $("#chat").append("<div><span>"+msg.nick+" </span><span>"+msg.mensaje+"</span><div>");
+    $("#chat").append("<div id='mensajeRecibido'><img src="+msg.avatar+"></img><span>"+msg.nick+" </span><span>"+msg.mensaje+"</span><div>");
     animateScroll();
 });
 
@@ -47,7 +53,10 @@ function conectarse(){
         nick = $("#nick").val();
         estado = $("#estado").children();
         if(nick!="" && avatar!=null){
-            $("#esteUsuario").append("<img src="+avatar+"></img><span>"+nick+"</span>");
+            $("#esteUsuario").append('<span class="mdl-chip mdl-chip--contact">'
+                +'<img class="mdl-chip__contact" src="'+avatar+'"></img>'
+                +'<span class="mdl-chip__text">'+nick+'</span></span>'
+            );
             socket.emit("new user",nick,avatar);
             conectado = true;
             $(".modal").css("display","none");
@@ -60,10 +69,10 @@ function enviarMensaje(){
     $("#formularioMensaje").submit(function(){
         var textoMensaje = $("#textoMensaje").val();
         if(textoMensaje!=""){
-            var msg = {"nick":nick,"mensaje":textoMensaje};
+            var msg = {"avatar":avatar,"nick":nick,"mensaje":textoMensaje};
             socket.emit("newMesaje",msg);
             animateScroll();
-            $("#chat").append("<div><span>"+msg.nick+" </span><span>"+msg.mensaje+"</span><div>");
+            $("#chat").append("<div id='mensajePropio'><img src="+msg.avatar+"></img><span>"+msg.nick+" </span><span>"+msg.mensaje+"</span><div>");
             $("#textoMensaje").val("");
         }
         return false;
@@ -72,6 +81,5 @@ function enviarMensaje(){
 
 $(document).ready(function(){
    conectarse();
-   avisoEscribiendo();
    enviarMensaje();
 });
