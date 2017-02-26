@@ -29,19 +29,6 @@ socket.on("allUsers",function(users){
     };
 });
 
-socket.on("writting",function(name){
-    var alertWritting = $('<div id="escribiendo"><span>El usuario '+name+' está escribiendo</span></div>');
-    var contador=500;
-    if($("#escribiendo")!=null){
-        $("#panel-alertas").append(alertWritting);
-        console.log($("#escribiendo"));
-        setTimeout(function(){$(alertWritting).remove()},contador);
-    }
-    else{
-        contador += 500;
-    }
-});
-
 socket.on("userDisconnect",function(id){
     $("div #"+id).remove();
 });
@@ -49,12 +36,6 @@ socket.on("userDisconnect",function(id){
 function animateScroll(){
     var container = $('#chat');
     container.animate({"scrollTop": container[0].scrollHeight},"faster");
-};
-
-function avisoEscribiendo(){
-    $("#textoMensaje").keyup(function(){
-        socket.emit("writting",nick);
-    });
 };
 
 function conectarse(){
@@ -92,5 +73,5 @@ function enviarMensaje(){
 $(document).ready(function(){
    conectarse();
    avisoEscribiendo();
-    enviarMensaje();
+   enviarMensaje();
 });

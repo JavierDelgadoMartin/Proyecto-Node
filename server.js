@@ -28,10 +28,6 @@ io.on('connection', function(socket){
     socket.broadcast.emit("new user",user);
   });
 
-  socket.on("writting",function(name){
-    socket.broadcast.emit("writting",name)
-  });
-
   socket.on('newMesaje', function(msg){
     socket.broadcast.emit('newMesaje', msg);
   });
